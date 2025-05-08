@@ -12,38 +12,38 @@ class _ProductCardState extends State<ProductCard> {
   bool favProd = false;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 5,
-      child: Container(
-        width: 150,
-        height: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0xFFC90051),
-              offset: Offset(4, 5),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xFFC90051),
+            offset: Offset(4, 5),
+          ),
+        ],
+      ),
+      // height: 210, // Adjust this value as needed
+      child: Column(
+        mainAxisSize:
+            MainAxisSize.min, // Change to min to avoid taking extra space
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _productImage(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: _productDetails(),
+                ),
+                _addToFavouriteButton(context),
+              ],
             ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _productImage(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(child: _productDetails()),
-                  _addToFavouriteButton(context)
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -56,7 +56,6 @@ class _ProductCardState extends State<ProductCard> {
       errorWidget: (_, __, ___) =>
           const Icon(Icons.warning, color: Color(0xFFC90051)),
       height: 130,
-      width: 120,
       fit: BoxFit.cover,
     );
   }
@@ -64,7 +63,6 @@ class _ProductCardState extends State<ProductCard> {
   Widget _productDetails() {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           'i\'m product',
@@ -77,6 +75,15 @@ class _ProductCardState extends State<ProductCard> {
         ),
         Text(r'$' 'price',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.star, color: Colors.amber, size: 16),
+            SizedBox(width: 2),
+            Text('rate',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold))
+          ],
+        )
       ],
     );
   }
@@ -94,6 +101,8 @@ class _ProductCardState extends State<ProductCard> {
       icon: favProd
           ? const Icon(Icons.favorite, color: Color(0xFFC90051))
           : const Icon(Icons.favorite_border, color: Colors.grey),
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
     );
   }
 }
